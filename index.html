@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>voidslugcat</title>
+    <!-- Подключаем Font Awesome (бесплатные иконки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -45,6 +47,7 @@
             justify-content: center;
             font-size: 2.8rem;
             box-shadow: 0 8px 20px rgba(233, 69, 96, 0.3);
+            color: #fff;               /* цвет для иконки в аватаре */
         }
 
         h1 {
@@ -96,6 +99,7 @@
             font-size: 1.3rem;
             width: 24px;
             text-align: center;
+            color: inherit;            /* наследует цвет ссылки, при наведении станет белым */
         }
 
         .footer {
@@ -113,35 +117,35 @@
 </head>
 <body>
     <div class="card">
-        <div class="avatar">🐾</div>
+        <div class="avatar"><img src="logo_b-r.png"></i></div>
         <h1>voidslugcat</h1>
         <p class="username">@voidslugcat</p>
 
         <div class="links">
             <a href="https://www.youtube.com/@voidslugcat" target="_blank" class="link">
-                <span class="icon">▶️</span> YouTube
+                <span class="icon"><i class="fa-brands fa-youtube"></i></span> YouTube
             </a>
             <a href="https://ru.pinterest.com/voidslugcat/" target="_blank" class="link">
-                <span class="icon">📌</span> Pinterest
+                <span class="icon"><i class="fa-brands fa-pinterest"></i></span> Pinterest
             </a>
             <a href="https://t.me/domain_voidslugcat" target="_blank" class="link">
-                <span class="icon">✈️</span> Telegram
+                <span class="icon"><i class="fa-brands fa-telegram"></i></span> Telegram
             </a>
             <a href="https://bsky.app/profile/voidslugcat.bsky.social" target="_blank" class="link">
-                <span class="icon">🦋</span> Bluesky
+                <span class="icon"><i class="fa-brands fa-bluesky"></i></span> Bluesky
             </a>
             <a href="https://github.com/voidslugcatik" target="_blank" class="link">
-                <span class="icon">🐙</span> GitHub
+                <span class="icon"><i class="fa-brands fa-github"></i></span> GitHub
             </a>
             <a href="https://discord.com/users/979652228237369354" target="_blank" class="link">
-                <span class="icon">💬</span> Discord
+                <span class="icon"><i class="fa-brands fa-discord"></i></span> Discord
             </a>
             <a href="https://steamcommunity.com/id/voidslugcat/" target="_blank" class="link">
-                <span class="icon">🎮</span> Steam
+                <span class="icon"><i class="fa-brands fa-steam"></i></span> Steam
             </a>
         </div>
 
-        <div class="footer">made with ❤️ by voidslugcat</div>
+        <div class="footer">voidslugcat</div>
     </div>
 </body>
 </html>
