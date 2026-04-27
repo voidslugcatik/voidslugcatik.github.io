@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>voidslugcat</title>
-    <!-- Подключаем Font Awesome (бесплатные иконки) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
@@ -37,17 +37,32 @@
         }
 
         .avatar {
-            width: 100px;
-            height: 100px;
+            /* Уменьшили размер до 90px (было 100px) */
+            width: 90px;
+            height: 90px;
             margin: 0 auto 20px;
-            background: linear-gradient(45deg, #e94560, #0f3460);
+            
+            /* Скругление контейнера + обрезаем всё, что выходит за границы */
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
+            overflow: hidden;
+            
+            /* Лёгкая тень вокруг аватара */
             box-shadow: 0 8px 20px rgba(233, 69, 96, 0.3);
-            color: #fff;               /* цвет для иконки в аватаре */
+            
+            /* Убираем фоновый градиент – теперь фон не нужен */
+            background: transparent;
+            
+            /* Для центрирования img (можно и без flex, т.к. img сам заполнит) */
+            display: block;
+            line-height: 0;
+        }
+
+        .avatar img {
+            /* Картинка полностью заполняет контейнер */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;   /* сохраняет пропорции, обрезая лишнее */
+            display: block;
         }
 
         h1 {
@@ -99,7 +114,7 @@
             font-size: 1.3rem;
             width: 24px;
             text-align: center;
-            color: inherit;            /* наследует цвет ссылки, при наведении станет белым */
+            color: inherit;
         }
 
         .footer {
@@ -117,11 +132,15 @@
 </head>
 <body>
     <div class="card">
-        <div class="avatar"><img src="logo_b-r.png"></i></div>
+        <!-- Аватар с картинкой -->
+        <div class="avatar">
+            <img src="logo_b-r.png" alt="voidslugcat logo">
+        </div>
         <h1>voidslugcat</h1>
         <p class="username">@voidslugcat</p>
 
         <div class="links">
+            <!-- ссылки без изменений -->
             <a href="https://www.youtube.com/@voidslugcat" target="_blank" class="link">
                 <span class="icon"><i class="fa-brands fa-youtube"></i></span> YouTube
             </a>
