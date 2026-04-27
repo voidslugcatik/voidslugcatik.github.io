@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>voidslugcat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #eee;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #e94560, #0f3460);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.3);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .username {
+            color: #a0a0c0;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: #ddd;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .link:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .link .icon {
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #666688;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="avatar">🐾</div>
+        <h1>voidslugcat</h1>
+        <p class="username">@voidslugcat</p>
+
+        <div class="links">
+            <a href="https://www.youtube.com/@voidslugcat" target="_blank" class="link">
+                <span class="icon">▶️</span> YouTube
+            </a>
+            <a href="https://ru.pinterest.com/voidslugcat/" target="_blank" class="link">
+                <span class="icon">📌</span> Pinterest
+            </a>
+            <a href="https://t.me/domain_voidslugcat" target="_blank" class="link">
+                <span class="icon">✈️</span> Telegram
+            </a>
+            <a href="https://bsky.app/profile/voidslugcat.bsky.social" target="_blank" class="link">
+                <span class="icon">🦋</span> Bluesky
+            </a>
+            <a href="https://github.com/voidslugcatik" target="_blank" class="link">
+                <span class="icon">🐙</span> GitHub
+            </a>
+            <a href="https://discord.com/users/979652228237369354" target="_blank" class="link">
+                <span class="icon">💬</span> Discord
+            </a>
+            <a href="https://steamcommunity.com/id/voidslugcat/" target="_blank" class="link">
+                <span class="icon">🎮</span> Steam
+            </a>
+        </div>
+
+        <div class="footer">made with ❤️ by voidslugcat</div>
+    </div>
+</body>
+</html>
