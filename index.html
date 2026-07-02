@@ -4,36 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>voidslugcat</title>
-    <!-- Подключаем Font Awesome (иконки) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-    <!-- Подключаем стили -->
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <!-- ======================================================== -->
-    <!-- Два оверлея для фона (меняются при наведении на плитки)  -->
-    <!-- ======================================================== -->
+    <!-- Фоновые оверлеи -->
     <div id="hover-bg-overlay-1" class="hover-bg-overlay"></div>
     <div id="hover-bg-overlay-2" class="hover-bg-overlay"></div>
-
-    <!-- Два слоя для больших иконок на фоне -->
     <div class="hover-bg-icon">
         <div class="hover-bg-layer" id="bg-icon-1"><i class="fa-brands fa-youtube"></i></div>
         <div class="hover-bg-layer" id="bg-icon-2"><i class="fa-brands fa-youtube"></i></div>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- Основной контейнер                                        -->
-    <!-- ======================================================== -->
     <div class="container">
-
-        <!-- Левая панель (аватар, имя, описание, переключатель языков) -->
         <aside class="left-panel">
             <div class="avatar">
                 <img src="ava.jpg" alt="voidslugcat avatar" />
             </div>
-            <!-- Бейджики УДАЛЕНЫ – оставлена только структура панели -->
             <h1>voidslugcat</h1>
             <p class="description i18n-text" data-i18n="bio"></p>
             <div class="lang-switch" id="langSwitch">
@@ -43,20 +31,21 @@
             </div>
         </aside>
 
-        <!-- Правая панель – сетка ссылок -->
         <main class="right-panel">
             <div class="links-grid" id="linksGrid">
-                <!-- Плитки будут сгенерированы скриптом из CONFIG.links -->
-                <!-- Но для простоты можно оставить статику, однако я сделаю генерацию через JS -->
-                <!-- Поэтому здесь просто пустой контейнер, в который скрипт вставит все плитки -->
+                <!-- Плитки генерируются скриптом -->
             </div>
         </main>
-
     </div>
 
-    <!-- ======================================================== -->
-    <!-- Подключаем скрипт                                          -->
-    <!-- ======================================================== -->
+    <!-- Модальное окно -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

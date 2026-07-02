@@ -1,45 +1,31 @@
-/* ================================================================
-   CSS-ПЕРЕМЕННЫЕ – здесь можно менять основные цвета сайта
-   ================================================================ */
 :root {
-    /* Основной фон сайта (градиент) */
     --bg-gradient: linear-gradient(145deg, #0b111f 0%, #0d1a20 30%, #0f1a2c 60%, #0d2019 100%);
-
-    /* Цвета для левой панели */
     --panel-bg: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(14, 24, 200, 0.15) 50%, rgba(25, 207, 1, 0.24) 100%);
     --panel-border: rgba(51, 231, 1, 0.377);
     --panel-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-
-    /* Аватар */
     --avatar-border: rgba(38, 255, 0, 0.685);
     --avatar-shadow: 0 8px 25px rgba(32, 207, 1, 0.493);
-
-    /* Текст */
     --text-primary: #fff;
     --text-secondary: #b0c0e0;
-
-    /* Переключатель языков */
     --lang-bg: rgba(255, 255, 255, 0.05);
     --lang-slider-bg: rgba(31, 207, 1, 0.2);
     --lang-slider-shadow: 0 0 8px rgba(31, 207, 1, 0.3);
     --lang-btn-color: #aaa;
     --lang-btn-active-color: #1FCF01;
-
-    /* Плитки ссылок */
     --tile-bg: rgba(255, 255, 255, 0.04);
     --tile-border: rgba(255, 255, 255, 0.1);
     --tile-color: #ddd;
     --tile-hover-bg: rgba(255, 255, 255, 0.15);
     --tile-hover-color: #fff;
     --tile-hover-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-
-    /* Анимации */
     --transition-speed: 0.3s;
+    --modal-bg: rgba(0, 0, 0, 0.8);
+    --modal-card-bg: #1a1a2e;
+    --modal-card-border: rgba(255, 255, 255, 0.2);
+    --btn-bg: rgba(255, 255, 255, 0.12);
+    --btn-hover-bg: rgba(255, 255, 255, 0.22);
 }
 
-/* ================================================================
-   Базовые стили
-   ================================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -59,9 +45,6 @@ body {
     z-index: 0;
 }
 
-/* ================================================================
-   Оверлеи для фона (при наведении на плитки)
-   ================================================================ */
 .hover-bg-overlay {
     position: fixed;
     top: 0;
@@ -102,9 +85,6 @@ body {
     opacity: 0.12;
 }
 
-/* ================================================================
-   Контейнер и панели
-   ================================================================ */
 .container {
     display: flex;
     gap: 30px;
@@ -138,7 +118,6 @@ body {
     border: 3px solid var(--avatar-border);
     box-shadow: var(--avatar-shadow);
 }
-
 .avatar img {
     width: 100%;
     height: 100%;
@@ -153,7 +132,6 @@ body {
     color: var(--text-primary);
     letter-spacing: 1px;
 }
-
 .left-panel .description {
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -162,9 +140,6 @@ body {
     flex: 1;
 }
 
-/* ================================================================
-   Переключатель языков
-   ================================================================ */
 .lang-switch {
     margin-top: auto;
     display: flex;
@@ -175,7 +150,6 @@ body {
     backdrop-filter: blur(5px);
     gap: 5px;
 }
-
 .lang-btn {
     background: transparent;
     border: none;
@@ -189,15 +163,11 @@ body {
     z-index: 1;
     transition: color var(--transition-speed) ease, transform 0.2s ease;
 }
-
-.lang-btn:active {
-    transform: scale(0.95);
-}
+.lang-btn:active { transform: scale(0.95); }
 .lang-btn.active {
     color: var(--lang-btn-active-color);
     text-shadow: 0 0 8px rgba(31, 207, 1, 0.5);
 }
-
 .lang-slider {
     position: absolute;
     top: 3px;
@@ -212,14 +182,10 @@ body {
     z-index: 0;
 }
 
-/* ================================================================
-   Правая панель – сетка ссылок
-   ================================================================ */
 .right-panel {
     flex: 1;
     min-width: 0;
 }
-
 .links-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -231,17 +197,19 @@ body {
     backdrop-filter: blur(5px);
     border: 2px solid var(--tile-border);
     border-radius: 18px;
-    padding: 20px 10px;
+    padding: 20px 10px 14px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-decoration: none;
     color: var(--tile-color);
     transition: all var(--transition-speed) ease;
     text-align: center;
     gap: 8px;
     min-height: 140px;
+    cursor: pointer;
+    position: relative;
 }
 
 .link-tile:hover {
@@ -256,78 +224,94 @@ body {
     font-size: 2rem;
     width: 40px;
     height: 40px;
+    pointer-events: none;
 }
 .link-tile .title {
     font-weight: 600;
     font-size: 1rem;
-}
-.link-tile .desc {
-    font-size: 0.75rem;
-    opacity: 0.8;
-    line-height: 1.3;
+    pointer-events: none;
+    margin-bottom: auto;
 }
 
-/* ----------------------------------------------------------------
-   Цвета иконок и фонов для каждой соцсети (можно менять)
-   ---------------------------------------------------------------- */
-.link-tile.youtube .icon {
-    color: #FF0000;
-}
-.link-tile.youtube {
-    background: linear-gradient(135deg, rgba(255, 0, 0, 0.35), rgba(200, 0, 0, 0.123));
-}
-.link-tile.pinterest .icon {
-    color: #e60060;
-}
-.link-tile.pinterest {
-    background: linear-gradient(135deg, rgba(230, 0, 96, 0.35), rgba(179, 0, 27, 0.116));
-}
-.link-tile.telegram .icon {
-    color: #0088CC;
-}
-.link-tile.telegram {
-    background: linear-gradient(135deg, rgba(0, 136, 204, 0.35), rgba(0, 102, 153, 0.13));
-}
-.link-tile.bluesky .icon {
-    color: #0560FF;
-}
-.link-tile.bluesky {
-    background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137));
-}
-.link-tile.ibis .icon {
-    color: #0560FF;
-}
-.link-tile.ibis {
-    background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137));
-}
-.link-tile.github .icon {
-    color: #ffffff;
-}
-.link-tile.github {
-    background: linear-gradient(135deg, rgba(51, 51, 51, 0.5), rgba(26, 26, 26, 0.247));
-}
-.link-tile.discord .icon {
-    color: #5865F2;
-}
-.link-tile.discord {
-    background: linear-gradient(135deg, rgba(88, 101, 242, 0.35), rgba(71, 81, 196, 0.137));
-}
-.link-tile.steam .icon {
-    color: #5b728d;
-}
-.link-tile.steam {
-    background: linear-gradient(135deg, rgba(0, 17, 58, 0.5), rgba(56, 81, 124, 0.212));
-}
-.link-tile.tiktok .icon {
-    color: #000000;
-}
-.link-tile.tiktok {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(50, 50, 50, 0.2));
+.link-tile .actions {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    padding: 0 4px;
 }
 
-/* ----------------------------------------------------------------
-   Заглушки для GIF (оставляем как есть)
-   ---------------------------------------------------------------- */
+.link-tile .actions button {
+    background: var(--btn-bg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: inherit;
+    font-weight: 500;
+    min-height: 30px;
+    min-width: 36px;
+    white-space: nowrap;
+}
+
+.link-tile .actions button:hover {
+    background: var(--btn-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.link-tile .actions .copy-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+.link-tile .actions .copy-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.link-tile .actions .detail-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+.link-tile .actions .detail-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.link-tile .actions .copy-btn i {
+    font-size: 0.9rem;
+}
+
+/* Цвета иконок и фонов (как было) */
+.link-tile.youtube .icon { color: #FF0000; }
+.link-tile.youtube { background: linear-gradient(135deg, rgba(255, 0, 0, 0.35), rgba(200, 0, 0, 0.123)); }
+.link-tile.pinterest .icon { color: #e60060; }
+.link-tile.pinterest { background: linear-gradient(135deg, rgba(230, 0, 96, 0.35), rgba(179, 0, 27, 0.116)); }
+.link-tile.telegram .icon { color: #0088CC; }
+.link-tile.telegram { background: linear-gradient(135deg, rgba(0, 136, 204, 0.35), rgba(0, 102, 153, 0.13)); }
+.link-tile.bluesky .icon { color: #0560FF; }
+.link-tile.bluesky { background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137)); }
+.link-tile.ibis .icon { color: #0560FF; }
+.link-tile.ibis { background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137)); }
+.link-tile.github .icon { color: #ffffff; }
+.link-tile.github { background: linear-gradient(135deg, rgba(51, 51, 51, 0.5), rgba(26, 26, 26, 0.247)); }
+.link-tile.discord .icon { color: #5865F2; }
+.link-tile.discord { background: linear-gradient(135deg, rgba(88, 101, 242, 0.35), rgba(71, 81, 196, 0.137)); }
+.link-tile.steam .icon { color: #5b728d; }
+.link-tile.steam { background: linear-gradient(135deg, rgba(0, 17, 58, 0.5), rgba(56, 81, 124, 0.212)); }
+.link-tile.tiktok .icon { color: #ffffff; }
+.link-tile.tiktok { background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(50, 50, 50, 0.2)); }
+
+/* GIF-заглушки */
 .gif-placeholder {
     background: rgba(255, 255, 255, 0.02);
     border: 1px dashed rgba(255, 255, 255, 0.2);
@@ -342,9 +326,7 @@ body {
     min-height: 140px;
     transition: background 0.3s;
 }
-.gif-placeholder:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
+.gif-placeholder:hover { background: rgba(255, 255, 255, 0.08); }
 .gif-placeholder img {
     max-width: 80%;
     max-height: 70px;
@@ -356,46 +338,132 @@ body {
     opacity: 0.6;
 }
 
-/* ================================================================
-   Адаптивность
-   ================================================================ */
+/* Модальное окно с анимацией входа/выхода */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal.closing {
+    animation: fadeOut 0.25s ease forwards;
+}
+
+.modal-content {
+    background: var(--modal-card-bg);
+    border: 1px solid var(--modal-card-border);
+    border-radius: 24px;
+    padding: 30px 35px;
+    max-width: 420px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    position: relative;
+}
+
+.modal.active .modal-content {
+    animation: slideUp 0.3s ease forwards;
+}
+
+.modal.closing .modal-content {
+    animation: slideDown 0.25s ease forwards;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+.modal-close:hover { color: #fff; }
+
+#modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+#modalBody .modal-icon {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 4px;
+}
+#modalBody .modal-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+}
+#modalBody .modal-desc {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.6;
+    text-align: center;
+}
+#modalBody .modal-link {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: #4d6bfe;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+#modalBody .modal-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes slideDown {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(30px) scale(0.95); }
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .left-panel {
-        flex: 0 0 auto;
-        width: 100%;
-        max-width: 400px;
-        min-height: auto;
-        margin-bottom: 20px;
-    }
-    .right-panel {
-        width: 100%;
-        max-width: 600px;
-    }
-    .lang-switch {
-        margin-top: 20px;
-    }
-    .links-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .container { flex-direction: column; align-items: center; }
+    .left-panel { flex: 0 0 auto; width: 100%; max-width: 400px; min-height: auto; margin-bottom: 20px; }
+    .right-panel { width: 100%; max-width: 600px; }
+    .lang-switch { margin-top: 20px; }
+    .links-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 480px) {
-    .right-panel {
-        max-width: 100%;
-    }
-    .links-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
+    .right-panel { max-width: 100%; }
+    .links-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .modal-content { padding: 20px; }
+    .link-tile .actions button { font-size: 0.6rem; padding: 4px 8px; min-height: 26px; min-width: 30px; }
 }
 
-/* ================================================================
-   Анимация для переключения текста (i18n)
-   ================================================================ */
 .i18n-text {
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
