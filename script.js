@@ -41,7 +41,7 @@ const CONFIG = {
         github: 'linear-gradient(145deg, #1a1a1a 0%, #333333 30%, #1a1a1a 60%, #0d0d0d 100%)',
         discord: 'linear-gradient(145deg, #1a1a3a 0%, #2a2a5c 30%, #1a1a2a 60%, #0d0d1a 100%)',
         steam: 'linear-gradient(145deg, #0a0a14 0%, #16202a 30%, #0f1a1a 60%, #0a1414 100%)',
-        tiktok: 'linear-gradient(145deg, #1a1a1a 0%, #333333 30%, #1a1a1a 60%, #0c0c0c 100%)'
+        tiktok: 'linear-gradient(145deg, #1a1a1a 0%, #333333 30%, #1a1a1a 60%, #0e0e0e 100%)'
     },
 
     links: [
