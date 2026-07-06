@@ -1,31 +1,63 @@
+/* ================================================================
+   CSS-ПЕРЕМЕННЫЕ – НОВАЯ ЦВЕТОВАЯ СХЕМА (НА ОСНОВЕ ТВОЕЙ АВАТАРКИ)
+   ================================================================ */
 :root {
-    --bg-gradient: linear-gradient(145deg, #0b111f 0%, #0d1a20 30%, #0f1a2c 60%, #0d2019 100%);
-    --panel-bg: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(14, 24, 200, 0.15) 50%, rgba(25, 207, 1, 0.24) 100%);
-    --panel-border: rgba(51, 231, 1, 0.377);
-    --panel-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-    --avatar-border: rgba(38, 255, 0, 0.685);
-    --avatar-shadow: 0 8px 25px rgba(32, 207, 1, 0.493);
+    /* Основной фон – градиент по всем 13 цветам (плавный переход) */
+    --bg-gradient: linear-gradient(
+        145deg,
+        rgb(227, 0, 220) 0%,
+        rgb(200, 0, 117) 10%,
+        rgb(46, 0, 0) 20%,
+        rgb(66, 0, 84) 30%,
+        rgb(151, 0, 117) 40%,
+        rgb(117, 0, 99) 50%,
+        rgb(0, 0, 126) 60%,
+        rgb(19, 0, 214) 70%,
+        rgb(24, 0, 70) 80%,
+        rgb(43, 0, 194) 85%,
+        rgb(16, 0, 60) 90%,
+        rgb(39, 0, 96) 95%,
+        rgb(193, 0, 100) 100%
+    );
+
+    /* Панель – полупрозрачный фон с лёгким оттенком */
+    --panel-bg: rgba(0, 0, 0, 0.7);
+    --panel-border: rgba(227, 0, 220, 0.5);
+    --panel-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+
+    /* Аватар */
+    --avatar-border: rgb(227, 0, 220);
+    --avatar-shadow: 0 0 30px rgba(227, 0, 220, 0.5), 0 0 60px rgba(200, 0, 117, 0.3);
+
+    /* Текст */
     --text-primary: #fff;
-    --text-secondary: #b0c0e0;
-    --lang-bg: rgba(255, 255, 255, 0.05);
-    --lang-slider-bg: rgba(31, 207, 1, 0.2);
-    --lang-slider-shadow: 0 0 8px rgba(31, 207, 1, 0.3);
-    --lang-btn-color: #aaa;
-    --lang-btn-active-color: #1FCF01;
-    --tile-bg: rgba(255, 255, 255, 0.04);
-    --tile-border: rgba(255, 255, 255, 0.1);
-    --tile-color: #ddd;
-    --tile-hover-bg: rgba(255, 255, 255, 0.15);
-    --tile-hover-color: #fff;
-    --tile-hover-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    --text-secondary: #d4b0ff;
+
+    /* Переключатель языков */
+    --lang-bg: rgba(255, 255, 255, 0.1);
+    --lang-slider-bg: rgba(227, 0, 220, 0.3);
+    --lang-slider-shadow: 0 0 20px rgba(227, 0, 220, 0.3);
+    --lang-btn-color: #ccc;
+    --lang-btn-active-color: #e300dc;
+
+    /* Плитки (НЕ ТРОГАЕМ – оставляем старые цвета) */
+    /* Они заданы ниже в секции .link-tile */
+
+    /* Кнопки внутри плиток – адаптируем под новую палитру */
+    --btn-bg: rgba(255, 255, 255, 0.1);
+    --btn-hover-bg: rgba(255, 255, 255, 0.2);
+
+    /* Модальное окно */
+    --modal-bg: rgba(0, 0, 0, 0.85);
+    --modal-card-bg: rgba(20, 0, 40, 0.95);
+    --modal-card-border: rgba(227, 0, 220, 0.4);
+
     --transition-speed: 0.3s;
-    --modal-bg: rgba(0, 0, 0, 0.8);
-    --modal-card-bg: #1a1a2e;
-    --modal-card-border: rgba(255, 255, 255, 0.2);
-    --btn-bg: rgba(255, 255, 255, 0.12);
-    --btn-hover-bg: rgba(255, 255, 255, 0.22);
 }
 
+/* ================================================================
+   Базовые стили
+   ================================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -43,8 +75,12 @@ body {
     padding: 20px;
     position: relative;
     z-index: 0;
+    background-attachment: fixed;
 }
 
+/* ================================================================
+   Оверлеи для фона (при наведении) – с прозрачностью через класс
+   ================================================================ */
 .hover-bg-overlay {
     position: fixed;
     top: 0;
@@ -55,6 +91,15 @@ body {
     pointer-events: none;
     transition: opacity 0.4s ease;
     opacity: 0;
+    /* Режим смешивания – можно выбрать screen, overlay или вообще убрать */
+    mix-blend-mode: overlay;
+    /* Размытие фона под оверлеем – даёт эффект стекла */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.hover-bg-overlay.active {
+    opacity: 1; /* регулируй здесь прозрачность (0.3 – 0.9) */
 }
 
 .hover-bg-icon {
@@ -66,6 +111,7 @@ body {
     z-index: 0;
     pointer-events: none;
     color: #fff;
+    mix-blend-mode: screen;
 }
 
 .hover-bg-layer {
@@ -74,17 +120,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.6s ease, filter 0.6s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
+    filter: blur(12px);
 }
 
 .hover-bg-layer.active {
-    opacity: 0.12;
+    opacity: 0.4; /* прозрачность логотипа */
+    filter: blur(0px);
 }
 
+/* ================================================================
+   Контейнер и панели
+   ================================================================ */
 .container {
     display: flex;
     gap: 30px;
@@ -98,6 +149,7 @@ body {
 .left-panel {
     flex: 0 0 290px;
     background: var(--panel-bg);
+    backdrop-filter: blur(12px);
     border-radius: 24px;
     padding: 30px 25px;
     border: 2px solid var(--panel-border);
@@ -117,7 +169,15 @@ body {
     margin-bottom: 16px;
     border: 3px solid var(--avatar-border);
     box-shadow: var(--avatar-shadow);
+    animation: pulseGlow 3s ease-in-out infinite;
 }
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 20px rgba(227, 0, 220, 0.4), 0 0 40px rgba(200, 0, 117, 0.2); }
+    50% { box-shadow: 0 0 40px rgba(227, 0, 220, 0.8), 0 0 80px rgba(43, 0, 194, 0.4); }
+    100% { box-shadow: 0 0 20px rgba(227, 0, 220, 0.4), 0 0 40px rgba(200, 0, 117, 0.2); }
+}
+
 .avatar img {
     width: 100%;
     height: 100%;
@@ -131,6 +191,7 @@ body {
     margin-bottom: 8px;
     color: var(--text-primary);
     letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(227, 0, 220, 0.3);
 }
 .left-panel .description {
     font-size: 0.9rem;
@@ -140,6 +201,9 @@ body {
     flex: 1;
 }
 
+/* ================================================================
+   Переключатель языков
+   ================================================================ */
 .lang-switch {
     margin-top: auto;
     display: flex;
@@ -166,7 +230,7 @@ body {
 .lang-btn:active { transform: scale(0.95); }
 .lang-btn.active {
     color: var(--lang-btn-active-color);
-    text-shadow: 0 0 8px rgba(31, 207, 1, 0.5);
+    text-shadow: 0 0 15px rgba(227, 0, 220, 0.6);
 }
 .lang-slider {
     position: absolute;
@@ -182,6 +246,39 @@ body {
     z-index: 0;
 }
 
+/* ================================================================
+   Кнопки внутри плиток (копировать / подробнее) – с фикс. шириной и анимацией
+   ================================================================ */
+.link-tile .actions button {
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    color: #eee;
+    cursor: pointer;
+    transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: inherit;
+    font-weight: 500;
+    min-height: 30px;
+    white-space: nowrap;
+    width: auto;
+    min-width: 40px;
+    box-sizing: border-box;
+}
+
+.link-tile .actions button .i18n-text {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ================================================================
+   Правая панель – сетка ссылок
+   ================================================================ */
 .right-panel {
     flex: 1;
     min-width: 0;
@@ -192,10 +289,14 @@ body {
     gap: 16px;
 }
 
+/* ================================================================
+   Плитки – стекло + аддитивность + размытие
+   ================================================================ */
 .link-tile {
-    background: var(--tile-bg);
-    backdrop-filter: blur(5px);
-    border: 2px solid var(--tile-border);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 18px;
     padding: 20px 10px 14px 10px;
     display: flex;
@@ -203,21 +304,25 @@ body {
     align-items: center;
     justify-content: flex-start;
     text-decoration: none;
-    color: var(--tile-color);
     transition: all var(--transition-speed) ease;
     text-align: center;
     gap: 8px;
     min-height: 140px;
     cursor: pointer;
     position: relative;
+
+    /* Аддитивное наложение */
+    mix-blend-mode: screen;
+    color: #fff;
+    text-shadow: 0 0 12px rgba(0,0,0,0.6);
 }
 
 .link-tile:hover {
     transform: translateY(-5px);
-    box-shadow: var(--tile-hover-shadow);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: var(--tile-hover-color);
-    background: var(--tile-hover-bg);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
 }
 
 .link-tile .icon {
@@ -225,14 +330,21 @@ body {
     width: 40px;
     height: 40px;
     pointer-events: none;
+    filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
 }
+
 .link-tile .title {
     font-weight: 600;
     font-size: 1rem;
     pointer-events: none;
     margin-bottom: auto;
+    color: #fff;
+    text-shadow: 0 0 14px rgba(0,0,0,0.7);
 }
 
+/* ================================================================
+   Кнопки внутри плиток (копировать / подробнее)
+   ================================================================ */
 .link-tile .actions {
     display: flex;
     width: 100%;
@@ -243,15 +355,15 @@ body {
 }
 
 .link-tile .actions button {
-    background: var(--btn-bg);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 8px;
+    padding: 5px 12px;
     font-size: 0.7rem;
     color: #eee;
     cursor: pointer;
     transition: all 0.2s ease;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,54 +376,49 @@ body {
 }
 
 .link-tile .actions button:hover {
-    background: var(--btn-hover-bg);
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.link-tile .actions .copy-btn {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-}
-.link-tile .actions .copy-btn:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.18);
-}
-
-.link-tile .actions .detail-btn {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
-}
-.link-tile .actions .detail-btn:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.18);
 }
 
 .link-tile .actions .copy-btn i {
     font-size: 0.9rem;
 }
 
-/* Цвета иконок и фонов (как было) */
+/* ================================================================
+   ЦВЕТА ПЛИТОК (акцентные границы и лёгкие оттенки)
+   ================================================================ */
 .link-tile.youtube .icon { color: #FF0000; }
-.link-tile.youtube { background: linear-gradient(135deg, rgba(255, 0, 0, 0.35), rgba(200, 0, 0, 0.123)); }
-.link-tile.pinterest .icon { color: #e60060; }
-.link-tile.pinterest { background: linear-gradient(135deg, rgba(230, 0, 96, 0.35), rgba(179, 0, 27, 0.116)); }
-.link-tile.telegram .icon { color: #0088CC; }
-.link-tile.telegram { background: linear-gradient(135deg, rgba(0, 136, 204, 0.35), rgba(0, 102, 153, 0.13)); }
-.link-tile.bluesky .icon { color: #0560FF; }
-.link-tile.bluesky { background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137)); }
-.link-tile.ibis .icon { color: #0560FF; }
-.link-tile.ibis { background: linear-gradient(135deg, rgba(5, 96, 255, 0.35), rgba(0, 65, 204, 0.137)); }
-.link-tile.github .icon { color: #ffffff; }
-.link-tile.github { background: linear-gradient(135deg, rgba(51, 51, 51, 0.5), rgba(26, 26, 26, 0.247)); }
-.link-tile.discord .icon { color: #5865F2; }
-.link-tile.discord { background: linear-gradient(135deg, rgba(88, 101, 242, 0.35), rgba(71, 81, 196, 0.137)); }
-.link-tile.steam .icon { color: #5b728d; }
-.link-tile.steam { background: linear-gradient(135deg, rgba(0, 17, 58, 0.5), rgba(56, 81, 124, 0.212)); }
-.link-tile.tiktok .icon { color: #ffffff; }
-.link-tile.tiktok { background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(50, 50, 50, 0.2)); }
+.link-tile.youtube { border-color: rgba(255, 0, 0, 0.3); background: rgba(255, 0, 0, 0.15); }
 
-/* GIF-заглушки */
+.link-tile.pinterest .icon { color: #e60060; }
+.link-tile.pinterest { border-color: rgba(230, 0, 96, 0.3); background: rgba(230, 0, 96, 0.15); }
+
+.link-tile.telegram .icon { color: #0088CC; }
+.link-tile.telegram { border-color: rgba(0, 136, 204, 0.3); background: rgba(0, 136, 204, 0.15); }
+
+.link-tile.bluesky .icon { color: #0560FF; }
+.link-tile.bluesky { border-color: rgba(5, 96, 255, 0.3); background: rgba(5, 96, 255, 0.15); }
+
+.link-tile.ibis .icon { color: #0560FF; }
+.link-tile.ibis { border-color: rgba(5, 96, 255, 0.3); background: rgba(5, 96, 255, 0.15); }
+
+.link-tile.github .icon { color: #ffffff; }
+.link-tile.github { border-color: rgba(255, 255, 255, 0.2); background: rgba(51, 51, 51, 0.3); }
+
+.link-tile.discord .icon { color: #5865F2; }
+.link-tile.discord { border-color: rgba(88, 101, 242, 0.3); background: rgba(88, 101, 242, 0.15); }
+
+.link-tile.steam .icon { color: #5b728d; }
+.link-tile.steam { border-color: rgba(91, 114, 141, 0.3); background: rgba(0, 17, 58, 0.25); }
+
+.link-tile.tiktok .icon { color: #ffffff; }
+.link-tile.tiktok { border-color: rgba(255, 255, 255, 0.15); background: rgba(0, 0, 0, 0.15); }
+
+/* ================================================================
+   GIF-заглушки
+   ================================================================ */
 .gif-placeholder {
     background: rgba(255, 255, 255, 0.02);
     border: 1px dashed rgba(255, 255, 255, 0.2);
@@ -338,7 +445,9 @@ body {
     opacity: 0.6;
 }
 
-/* Модальное окно с анимацией входа/выхода */
+/* ================================================================
+   Модальное окно
+   ================================================================ */
 .modal {
     display: none;
     position: fixed;
@@ -449,7 +558,9 @@ body {
     to { opacity: 0; transform: translateY(30px) scale(0.95); }
 }
 
-/* Адаптивность */
+/* ================================================================
+   Адаптивность
+   ================================================================ */
 @media (max-width: 768px) {
     .container { flex-direction: column; align-items: center; }
     .left-panel { flex: 0 0 auto; width: 100%; max-width: 400px; min-height: auto; margin-bottom: 20px; }
@@ -464,10 +575,60 @@ body {
     .link-tile .actions button { font-size: 0.6rem; padding: 4px 8px; min-height: 26px; min-width: 30px; }
 }
 
+/* ================================================================
+   Анимация переключения текста
+   ================================================================ */
 .i18n-text {
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .i18n-text.fading-out {
     opacity: 0 !important;
     transform: translateY(-5px);
+}
+
+/* ================================================================
+   РАЗМЫТИЕ ДЛЯ ШЕЙДЕРНОГО ФОНА
+   ================================================================ */
+#bgShader {
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+    transform: scale(0.95);
+    transform-origin: center center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    pointer-events: none;
+    display: block;
+    background: #0a0a0a;
+    animation: vignettePulse 6s ease-in-out infinite;
+}
+
+/* Анимация виньетки */
+@keyframes vignettePulse {
+    0% {
+        transform: scale(0.92);
+        filter: blur(16px) brightness(1.0);
+        -webkit-filter: blur(16px) brightness(1.0);
+    }
+    50% {
+        transform: scale(0.96);
+        filter: blur(22px) brightness(1.1);
+        -webkit-filter: blur(22px) brightness(1.1);
+    }
+    100% {
+        transform: scale(0.92);
+        filter: blur(16px) brightness(1.0);
+        -webkit-filter: blur(16px) brightness(1.0);
+    }
+}
+
+#trailCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
 }
