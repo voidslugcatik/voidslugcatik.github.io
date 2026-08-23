@@ -31,7 +31,8 @@ const CONFIG = {
             detail_discord: "-",
             detail_steam: "-",
             detail_tiktok: "-",
-            detail_twitter: "-", // НОВОЕ
+            detail_twitter: "-",
+            detail_itchio: "-", // НОВОЕ
             detail_btn: "More",
             gif_text: "maybe something else",
             gif_text2: ". ^ ."
@@ -47,7 +48,8 @@ const CONFIG = {
             detail_discord: "-",
             detail_steam: "-",
             detail_tiktok: "-",
-            detail_twitter: "-", // НОВОЕ
+            detail_twitter: "-",
+            detail_itchio: "-", // НОВОЕ
             detail_btn: "Подробнее",
             gif_text: "может чёт ещё будет",
             gif_text2: ". ^ ."
@@ -64,7 +66,8 @@ const CONFIG = {
         discord: 'linear-gradient(145deg, #7289DA 0%, #5865F2 30%, #4752C4 60%, #363F8A 100%)',
         steam: 'linear-gradient(145deg, #4B6B8F 0%, #2A4A6E 30%, #1A3050 60%, #0D1A30 100%)',
         tiktok: 'linear-gradient(145deg, #FFFFFF 0%, #CCCCCC 30%, #999999 60%, #666666 100%)',
-        twitter: 'linear-gradient(145deg, #000000 0%, #1DA1F2 30%, #0D8BD9 60%, #0A6B9E 100%)' // НОВОЕ
+        twitter: 'linear-gradient(145deg, #000000 0%, #1DA1F2 30%, #0D8BD9 60%, #0A6B9E 100%)',
+        itchio: 'linear-gradient(145deg, #FA5C5C 0%, #E84D4D 30%, #CC3D3D 60%, #A82E2E 100%)' // НОВОЕ
     },
 
     links: [
@@ -140,7 +143,6 @@ const CONFIG = {
             hover: 'tiktok',
             detailKey: 'detail_tiktok'
         },
-        // НОВАЯ ПЛИТКА TWITTER (X)
         {
             className: 'twitter',
             href: 'https://x.com/voidslugcat31',
@@ -148,6 +150,15 @@ const CONFIG = {
             titleKey: 'Twitter',
             hover: 'twitter',
             detailKey: 'detail_twitter'
+        },
+        // НОВАЯ ПЛИТКА ITCH.IO
+        {
+            className: 'itchio',
+            href: 'https://voidslugcat.itch.io/',
+            icon: 'fa-brands fa-itch-io',
+            titleKey: 'Itch.io',
+            hover: 'itchio',
+            detailKey: 'detail_itchio'
         }
     ],
 
@@ -184,6 +195,9 @@ function setBodyHover(type) {
             }
             if (type === 'twitter') {
                 iconClass = 'fa-brands fa-x-twitter';
+            }
+            if (type === 'itchio') {
+                iconClass = 'fa-brands fa-itch-io';
             }
             icon.className = iconClass;
             currentLayer.classList.remove('active');
