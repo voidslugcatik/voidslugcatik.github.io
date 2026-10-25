@@ -2,21 +2,21 @@
 //  КОНФИГУРАЦИЯ
 // ===============================================================
 
-const COLORS_SHADER = [
-    [0, 200, 100],     // Яркий зеленый (верх)
-    [50, 220, 210],    // Яркий бирюзовый (центр)
-    [30, 150, 140],    // Темный бирюзовый
-    [60, 100, 220],    // Королевский синий (слева)
-    [120, 60, 180],    // Фиолетовый (справа)
-    [10, 40, 20],      // Глубокий зеленый (тени)
-    [20, 30, 80],      // Глубокий синий
-    [40, 10, 60],      // Глубокий фиолетовый
-    [150, 240, 240],   // Бледный циан (свет)
-    [0, 0, 0],         // Черный (контуры)
-    [0, 150, 50],      // Средний зеленый
-    [80, 40, 120],     // Средний фиолетовый
-    [80, 120, 250]     // Светло-синий
-];
+const THEMES = {
+    delusion: [
+        [0,200,100],[50,220,210],[30,150,140],[60,100,220],[120,60,180],[10,40,20],
+        [20,30,80],[40,10,60],[150,240,240],[0,0,0],[0,150,50],[80,40,120],[80,120,250]
+    ],
+    bloom: [
+        [227,0,220],[200,0,117],[46,0,0],[66,0,84],[151,0,117],[117,0,99],
+        [0,0,126],[19,0,214],[24,0,70],[43,0,194],[16,0,60],[39,0,96],[193,0,100]
+    ]
+};
+
+(function () {
+    var t = localStorage.getItem('theme') || 'delusion';
+    document.documentElement.setAttribute('data-theme', t);
+})();
 
 const CONFIG = {
     translations: {
@@ -367,7 +367,64 @@ class ShaderBackground {
 // ================================================================
 
 const canvas = document.getElementById('bgShader');
-const bg = new ShaderBackground(canvas, COLORS_SHADER);
+let currentTheme = localStorage.getItem('theme') || 'delusion';
+if (!THEMES[currentTheme]) currentTheme = Object.keys(THEMES)[0];
+
+const bg = initBgShaderWebGL('bgShader', THEMES[currentTheme]);
+
+// -------- Переключение тем (палитра + аватарка) --------
+const avatarImg = document.querySelector('.avatar img');
+
+let themeTimer = 0;
+
+function applyTheme(name) {
+    if (!THEMES[name]) return;
+    currentTheme = name;
+
+    // всё триггерим сразу, без ожидания
+
+    // палитра шейдера начинает перетекать
+    if (bg && bg.setColorsSmooth) bg.setColorsSmooth(THEMES[name], 600);
+
+    // CSS-переменные — CSS-transition сгладит
+    document.documentElement.setAttribute('data-theme', name);
+
+    // аватарка кросс-фейдится
+    if (avatarImg) {
+        const src = 'ava_' + name + '.jpg';
+        const pre = new Image();
+        pre.onload = () => {
+            avatarImg.src = src;
+            avatarImg.classList.remove('pop');
+            void avatarImg.offsetWidth;
+            avatarImg.classList.add('pop');
+        };
+        pre.onerror = () => { avatarImg.src = src; };
+        pre.src = src;
+    }
+
+    // активная кнопка + бегунок
+    document.querySelectorAll('.theme-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.theme === name);
+    });
+    const activeTheme = document.querySelector('.theme-btn.active');
+    if (activeTheme) updateThemeSlider(activeTheme);
+
+    localStorage.setItem('theme', name);
+}
+
+applyTheme(currentTheme);
+requestAnimationFrame(() => {
+    const t = document.querySelector('.theme-btn.active');
+    if (t) updateThemeSlider(t);
+});
+
+document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (btn.dataset.theme === currentTheme) return;
+        applyTheme(btn.dataset.theme);
+    });
+});
 
 // ================================================================
 //  СЛЕД ОТ МЫШКИ (исправленная логика)
@@ -661,10 +718,16 @@ const langSwitch = document.getElementById('langSwitch');
 const langSlider = document.getElementById('langSlider');
 
 function updateSlider(activeButton) {
-    const btnRect = activeButton.getBoundingClientRect();
-    const switchRect = langSwitch.getBoundingClientRect();
-    langSlider.style.left = (btnRect.left - switchRect.left) + 'px';
-    langSlider.style.width = btnRect.width + 'px';
+    langSlider.style.left = activeButton.offsetLeft + 'px';
+    langSlider.style.width = activeButton.offsetWidth + 'px';
+}
+
+function updateThemeSlider(activeButton) {
+    const slider = document.getElementById('themeSlider');
+    const switcher = document.getElementById('themeSwitch');
+    if (!slider || !activeButton || !switcher) return;
+    slider.style.left = activeButton.offsetLeft + 'px';
+    slider.style.width = activeButton.offsetWidth + 'px';
 }
 
 // -------- Плавное изменение ширины кнопок при смене языка --------
@@ -695,40 +758,45 @@ function updateDetailButtonsWidth() {
     });
 }
 
+let langTimer = 0;
+
 function applyLanguage(lang, animated = true) {
     const elements = document.querySelectorAll('.i18n-text');
-    if (!animated) {
+
+    function setText() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.dataset.i18n;
             if (CONFIG.translations[lang] && CONFIG.translations[lang][key]) {
                 el.textContent = CONFIG.translations[lang][key];
             }
         });
-        const activeBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
-        if (activeBtn) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            activeBtn.classList.add('active');
-            updateSlider(activeBtn);
-        }
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.lang === lang);
+        });
+    }
+
+    function syncSlider() {
+        const activeBtn = document.querySelector('.lang-btn.active');
+        if (activeBtn) updateSlider(activeBtn);
+    }
+
+    if (!animated) {
+        setText();
+        setDetailButtonWidth(lang);
+        requestAnimationFrame(syncSlider);
         return;
     }
 
+    if (langTimer) clearTimeout(langTimer);
     elements.forEach(el => el.classList.add('fading-out'));
-    const firstElement = elements[0];
-    if (!firstElement) return;
-    function onTransitionEnd(e) {
-        if (e.propertyName === 'opacity') {
-            firstElement.removeEventListener('transitionend', onTransitionEnd);
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.dataset.i18n;
-                if (CONFIG.translations[lang] && CONFIG.translations[lang][key]) {
-                    el.textContent = CONFIG.translations[lang][key];
-                }
-            });
-            elements.forEach(el => el.classList.remove('fading-out'));
-        }
-    }
-    firstElement.addEventListener('transitionend', onTransitionEnd);
+
+    langTimer = setTimeout(() => {
+        langTimer = 0;
+        setText();
+        setDetailButtonWidth(lang);
+        elements.forEach(el => el.classList.remove('fading-out'));
+        requestAnimationFrame(syncSlider);
+    }, 180);
 }
 
 const userLang = navigator.language || navigator.userLanguage;
@@ -780,18 +848,6 @@ function setDetailButtonWidth(lang) {
         btn.style.width = width;
     });
 }
-
-// Переопределяем applyLanguage, чтобы при смене языка обновлять ширину кнопок
-const originalApplyLang = applyLanguage;
-applyLanguage = function(lang, animated = true) {
-    // Вызываем оригинальную функцию для обновления текста
-    originalApplyLang(lang, animated);
-    // Устанавливаем ширину кнопок под текущий язык
-    // Делаем это с небольшой задержкой, чтобы текст уже обновился
-    setTimeout(() => {
-        setDetailButtonWidth(lang);
-    }, animated ? 125 : 0);
-};
 
 // При загрузке страницы тоже устанавливаем ширину под текущий язык
 window.addEventListener('load', function() {
