@@ -2,46 +2,36 @@
    CSS-ПЕРЕМЕННЫЕ – НОВАЯ ЦВЕТОВАЯ СХЕМА (НА ОСНОВЕ ТВОЕЙ АВАТАРКИ)
    ================================================================ */
 :root {
-    /* Основной фон – градиент по всем 13 цветам (плавный переход) */
+    /* Основной фон – градиент по новой палитре (зеленый -> циан -> синий -> фиолетовый) */
     --bg-gradient: linear-gradient(
         145deg,
-        rgb(227, 0, 220) 0%,
-        rgb(200, 0, 117) 10%,
-        rgb(46, 0, 0) 20%,
-        rgb(66, 0, 84) 30%,
-        rgb(151, 0, 117) 40%,
-        rgb(117, 0, 99) 50%,
-        rgb(0, 0, 126) 60%,
-        rgb(19, 0, 214) 70%,
-        rgb(24, 0, 70) 80%,
-        rgb(43, 0, 194) 85%,
-        rgb(16, 0, 60) 90%,
-        rgb(39, 0, 96) 95%,
-        rgb(193, 0, 100) 100%
+        rgb(0, 200, 100) 0%,
+        rgb(50, 220, 210) 20%,
+        rgb(30, 150, 140) 40%,
+        rgb(60, 100, 220) 60%,
+        rgb(120, 60, 180) 80%,
+        rgb(20, 10, 40) 100%
     );
 
-    /* Панель – полупрозрачный фон с лёгким оттенком */
-    --panel-bg: rgba(0, 0, 0, 0.7);
-    --panel-border: rgba(227, 0, 220, 0.5);
+    /* Панель – темный полупрозрачный фон */
+    --panel-bg: rgba(10, 20, 30, 0.75);
+    --panel-border: rgba(50, 220, 210, 0.5); /* Бирюзовая рамка */
     --panel-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
 
     /* Аватар */
-    --avatar-border: rgb(227, 0, 220);
-    --avatar-shadow: 0 0 30px rgba(227, 0, 220, 0.5), 0 0 60px rgba(200, 0, 117, 0.3);
+    --avatar-border: rgb(50, 220, 210);
+    --avatar-shadow: 0 0 30px rgba(50, 220, 210, 0.5), 0 0 60px rgba(120, 60, 180, 0.3);
 
     /* Текст */
     --text-primary: #fff;
-    --text-secondary: #d4b0ff;
+    --text-secondary: #a0f0e0; /* Светло-бирюзовый */
 
     /* Переключатель языков */
     --lang-bg: rgba(255, 255, 255, 0.1);
-    --lang-slider-bg: rgba(227, 0, 220, 0.3);
-    --lang-slider-shadow: 0 0 20px rgba(227, 0, 220, 0.3);
+    --lang-slider-bg: rgba(50, 220, 210, 0.3);
+    --lang-slider-shadow: 0 0 20px rgba(50, 220, 210, 0.3);
     --lang-btn-color: #ccc;
-    --lang-btn-active-color: #e300dc;
-
-    /* Плитки (НЕ ТРОГАЕМ – оставляем старые цвета) */
-    /* Они заданы ниже в секции .link-tile */
+    --lang-btn-active-color: #32dcd2;
 
     /* Кнопки внутри плиток – адаптируем под новую палитру */
     --btn-bg: rgba(255, 255, 255, 0.1);
@@ -49,8 +39,8 @@
 
     /* Модальное окно */
     --modal-bg: rgba(0, 0, 0, 0.85);
-    --modal-card-bg: rgba(20, 0, 40, 0.95);
-    --modal-card-border: rgba(227, 0, 220, 0.4);
+    --modal-card-bg: rgba(15, 25, 35, 0.95);
+    --modal-card-border: rgba(50, 220, 210, 0.4);
 
     --transition-speed: 0.3s;
 }
@@ -173,9 +163,9 @@ body {
 }
 
 @keyframes pulseGlow {
-    0% { box-shadow: 0 0 20px rgba(227, 0, 220, 0.4), 0 0 40px rgba(200, 0, 117, 0.2); }
-    50% { box-shadow: 0 0 40px rgba(227, 0, 220, 0.8), 0 0 80px rgba(43, 0, 194, 0.4); }
-    100% { box-shadow: 0 0 20px rgba(227, 0, 220, 0.4), 0 0 40px rgba(200, 0, 117, 0.2); }
+    0% { box-shadow: 0 0 20px rgba(50, 220, 210, 0.4), 0 0 40px rgba(120, 60, 180, 0.2); }
+    50% { box-shadow: 0 0 40px rgba(50, 220, 210, 0.8), 0 0 80px rgba(120, 60, 180, 0.4); }
+    100% { box-shadow: 0 0 20px rgba(50, 220, 210, 0.4), 0 0 40px rgba(120, 60, 180, 0.2); }
 }
 
 .avatar img {
@@ -191,7 +181,7 @@ body {
     margin-bottom: 8px;
     color: var(--text-primary);
     letter-spacing: 1px;
-    text-shadow: 0 0 20px rgba(227, 0, 220, 0.3);
+    text-shadow: 0 0 20px rgba(50, 220, 210, 0.3);
 }
 .left-panel .description {
     font-size: 0.9rem;
@@ -320,7 +310,7 @@ body {
 .link-tile:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(50, 220, 210, 0.6); /* Бирюзовая рамка */
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(12px);
 }
